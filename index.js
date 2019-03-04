@@ -2,45 +2,55 @@
 /**
  * Created by Fred(qq:24242811) on 2018/8/18.
  */
-const crypto = require('crypto');
+const crypto = require('crypto')
 const OSS = require('ali-oss')
 const fs = require('fs-extra')
 const co = require('co')
 const path = require('path')
 const rc = require('rc')
+const archiver = require('archiver')
 
 class AliossUploader{
 	constructor(options) {
 		if (options.ossKey){
 			options = Object.assign(options, JSON.parse(aesDecrypt(options.ossKey, 'stgame.cn')))
 		}
-		this.options = Object.assign({
-			enableLog:true
-		}, options)
+		// 默认打印日志
+		this.options = Object.assign({enableLog:true}, options)
 		this.client = new OSS(options)
 	}
 	start(){
-		let outputPath = path.join('./', this.options.srcPath)
+		let output = fs.createWriteStream(path.join('./', this.options.zipName))
+		output.on('close', async () => {
+			let startTime = now()
+			this.log(path.join('./', this.options.zipName)+' size '+ (archive.pointer()/1024).toFixed(2) + ' KB')
+			try {
+				this.log('---UPLOAD START---')
+				console.log(this.options.zipName+'|'+path.join(__dirname, this.options.zipName) )
+				let r1 =  await this.client.put(this.options.zipName, path.join(__dirname, this.options.zipName))
+				console.log('put success: %j', r1);
+				this.log(`---UPLOAD END (${now()-startTime}ms)---`)
+			} catch(err) {
+				console.error('error: %j', err);
+			}
+		})
 
-		let startTime = now()
-		co(function* () {
-			this.log('---UPLOAD START---')
-			let list = browserFiles(outputPath)
-			if (this.options.exclude){
-				this.options.exclude = new RegExp(this.options.exclude)
-				list = list.filter((vo)=>this.options.exclude.test(vo))
+		var archive = archiver('zip', {zlib: { level: 9 } })
+		archive.on('warning', function(err) {
+			if (err.code === 'ENOENT') {
+				this.log('warning '+err)
+			} else {
+				throw err
 			}
-			let prefix = this.options.prefix || ''
-			for (let i = 0; i < list.length; i++) {
-				const filePath = list[i];
-				const key = path.join(prefix, filePath.slice(outputPath.length)).replace(/\\/g, '/')
-				this.log(i, key, filePath)
-				yield this.client.put(key, filePath)
-			}
-			this.log(`---UPLOAD END (${now()-startTime}ms)---`)
-		}.bind(this)).catch(function (err) {
+		})
+		archive.on('error', function(err) {
+			this.log('error '+err)
 			throw err
-		});
+		})
+
+		archive.pipe(output)
+		archive.directory(path.join('./', this.options.srcPath), false)
+		archive.finalize()
 	}
 
 	log(...rest){
@@ -68,17 +78,17 @@ function browserFiles(folder, list){
 }
 
 function aesEncrypt(data, key) {
-	const cipher = crypto.createCipher('aes192', key);
-	var crypted = cipher.update(data, 'utf8', 'hex');
-	crypted += cipher.final('hex');
-	return crypted;
+	const cipher = crypto.createCipher('aes192', key)
+	var crypted = cipher.update(data, 'utf8', 'hex')
+	crypted += cipher.final('hex')
+	return crypted
 }
 
 function aesDecrypt(encrypted, key) {
-	const decipher = crypto.createDecipher('aes192', key);
-	var decrypted = decipher.update(encrypted, 'hex', 'utf8');
-	decrypted += decipher.final('utf8');
-	return decrypted;
+	const decipher = crypto.createDecipher('aes192', key)
+	var decrypted = decipher.update(encrypted, 'hex', 'utf8')
+	decrypted += decipher.final('utf8')
+	return decrypted
 }
 
 const config = rc('oss', {
@@ -86,9 +96,8 @@ const config = rc('oss', {
 	accessKeySecret: null,
 	region: null,
 	bucket: null,
-	prefix: '/',
+	zipName: 'tmp-dist.zip',
 	srcPath: 'dist',
-	exclude: "/.*$/",
 	ossKey: null,
 	enableLog:true
 })

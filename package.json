@@ -27,6 +27,7 @@
   "homepage": "https://github.com/xuybin/ali-oss-cli#readme",
   "dependencies": {
     "ali-oss": "^6.1.0",
+    "archiver": "^3.0.0",
     "co": "^4.6.0",
     "fs-extra": "^7.0.1",
     "rc": "^1.2.8"

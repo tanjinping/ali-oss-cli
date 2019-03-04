@@ -1,10 +1,10 @@
-# aliyun oss upload cli
+# compress dist and upload it to aliyun oss
 
 ```bash
 npm i --save-dev ali-oss-cli
 ```
 
-make file '.ossrc'
+make UTF-8 file '.ossrc' 
 
 ```bash
 {
@@ -12,9 +12,8 @@ make file '.ossrc'
     "accessKeySecret": "***",
     "region": "oss-cn-hangzhou", // eg: oss-cn-hangzhou
     "bucket": "stgame",
-    "prefix": "test", // oss directory prefix; eg: auto_upload_ci/test
-    "srcPath":"dist", // upload directory
-    "exclude": ".*$" // Optional, default: .*$
+    "srcPath":"dist", // compress and upload directory
+    "zipName": "dev-servername-latest.zip" // zip file name
 }
 ```
 
