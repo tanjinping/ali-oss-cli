@@ -1,17 +1,17 @@
 {
-  "name": "alioss-uploader-cli",
+  "name": "ali-oss-cli",
   "version": "1.0.3",
   "description": "aliyun oss upload cli",
   "main": "index.js",
   "bin": {
-    "aliossUploader": "index.js"
+    "ossUpload": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fred-feng/alioss-uploader.git"
+    "url": "git+https://github.com/xuybin/ali-oss-cli.git"
   },
   "keywords": [
     "cli",
@@ -22,13 +22,13 @@
   "author": "fred.feng",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fred-feng/alioss-uploader/issues"
+    "url": "https://github.com/xuybin/ali-oss-cli/issues"
   },
-  "homepage": "https://github.com/fred-feng/alioss-uploader#readme",
+  "homepage": "https://github.com/xuybin/ali-oss-cli#readme",
   "dependencies": {
-    "ali-oss": "^6.0.1",
+    "ali-oss": "^6.1.0",
     "co": "^4.6.0",
-    "fs-extra": "^7.0.0",
+    "fs-extra": "^7.0.1",
     "rc": "^1.2.8"
   }
 }

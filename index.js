@@ -81,7 +81,7 @@ function aesDecrypt(encrypted, key) {
 	return decrypted;
 }
 
-const config = rc('alioss', {
+const config = rc('oss', {
 	accessKeyId: null,
 	accessKeySecret: null,
 	region: null,

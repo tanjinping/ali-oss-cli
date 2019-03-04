@@ -1,11 +1,12 @@
-aliyun oss upload cli
+# aliyun oss upload cli
 
-```
-npm i -g alioss-uploader-cli
+```bash
+npm i -g ali-oss-cli
 ```
 
-make file '.aliossrc'
-```
+make file '.ossrc'
+
+```bash
 {
     "accessKeyId": "***",
     "accessKeySecret": "***",
@@ -18,11 +19,12 @@ make file '.aliossrc'
 ```
 
 edit 'package.json'
-```
+
+```bash
 {
     ...
     "scripts": :{
-        "upload": "aliossUploader"
+        "upload": "ossUpload"
         ...
     }
     ...
@@ -31,6 +33,7 @@ edit 'package.json'
 
 upload
 
-```
+```bash
 npm run upload
 ```
+
