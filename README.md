@@ -1,7 +1,7 @@
 # aliyun oss upload cli
 
 ```bash
-npm i -g ali-oss-cli
+npm i --save-dev ali-oss-cli
 ```
 
 make file '.ossrc'
