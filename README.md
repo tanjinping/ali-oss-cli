@@ -4,7 +4,7 @@
 npm i --save-dev ali-oss-cli
 ```
 
-make UTF-8 file '.ossrc' 
+make UTF-8 file '.ossrc'
 
 ```bash
 {
