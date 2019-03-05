@@ -26,8 +26,8 @@ class AliossUploader{
 			this.log(path.join('./', this.options.zipName)+' size '+ (archive.pointer()/1024).toFixed(2) + ' KB')
 			try {
 				this.log('---UPLOAD START---')
-				console.log(this.options.zipName+'|'+path.join(__dirname, this.options.zipName) )
-				let r1 =  await this.client.put(this.options.zipName, path.join(__dirname, this.options.zipName))
+				console.log(this.options.zipName+'|'+path.join('./', this.options.zipName) )
+				let r1 =  await this.client.put(this.options.zipName, path.join('./', this.options.zipName))
 				console.log('put success: %j', r1);
 				this.log(`---UPLOAD END (${now()-startTime}ms)---`)
 			} catch(err) {
