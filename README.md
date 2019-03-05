@@ -35,4 +35,3 @@ upload
 ```bash
 npm run upload
 ```
-s
