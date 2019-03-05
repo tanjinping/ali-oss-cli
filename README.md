@@ -13,7 +13,7 @@ make UTF-8 file '.ossrc'
     "region": "oss-cn-hangzhou", // eg: oss-cn-hangzhou
     "bucket": "stgame",
     "srcPath":"dist", // compress and upload directory
-    "zipName": "dev-servername-latest.zip" // zip file name
+    "zipName": "servername-latest-dev.zip" // zip file name
 }
 ```
 
@@ -35,4 +35,4 @@ upload
 ```bash
 npm run upload
 ```
-
+s
